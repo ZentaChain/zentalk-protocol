@@ -1,6 +1,6 @@
-# ZenTalk Protocol
+# Zentalk Protocol
 
-> Decentralized communication standards, routing mechanisms, and specifications for the ZenTalk network
+> Decentralized communication standards, routing mechanisms, and specifications for the Zentalk network
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -16,7 +16,7 @@
 
 ## Overview
 
-The ZenTalk Protocol defines the standards and mechanisms for a decentralized, privacy-first messaging network. This repository contains the complete protocol specifications, architecture documentation, and technical details for developers who want to understand or implement the protocol.
+The Zentalk Protocol defines the standards and mechanisms for a decentralized, privacy-first messaging network. This repository contains the complete protocol specifications, architecture documentation, and technical details for developers who want to understand or implement the protocol.
 
 ## Key Components
 
@@ -25,7 +25,7 @@ The protocol architecture includes:
 1. **Mesh Router** — Determines optimal delivery paths across the network
 2. **ZKP Routing** — Verifies routes while protecting message content (zero-knowledge proofs)
 3. **Onion Relayer** — Applies layered encryption for user anonymity
-4. **Pontion Layer** — Manages node coordination and network topology
+4. **Coordination Layer** — Manages node coordination and network topology
 5. **DHT Storage** — Distributes messages across nodes with redundancy
 6. **CHAIN Rewards** — Incentivizes network participation with token rewards
 
@@ -102,29 +102,49 @@ The protocol architecture includes:
 
 ## Message Flow
 
+### Two-Layer Encryption Model
+
+Zentalk uses **two separate encryption layers** to ensure both privacy and security:
+
+1. **Onion Routing Layers** (3 layers) - Each relay peels one layer to learn the next hop
+2. **End-to-End Encryption** (Double Ratchet) - Only the recipient can decrypt the message content
+
+**Important**: Relays decrypt ONLY the onion routing layer (to find the next hop), but they CANNOT decrypt the message content itself.
+
 ```
 Alice                Relay 1              Relay 2              Relay 3              Bob
   │                    │                    │                    │                    │
-  ├─ Encrypt(3x) ─────>│                    │                    │                    │
-  │                    ├─ Decrypt(1) ──────>│                    │                    │
-  │                    │                    ├─ Decrypt(1) ──────>│                    │
-  │                    │                    │                    ├─ Decrypt(1) ──────>│
-  │                    │                    │                    │                    ├─ Read
+  ├─ E2E + Onion(3x) ─>│                    │                    │                    │
+  │  [Message locked]  │                    │                    │                    │
+  │                    ├─ Peel Layer 1 ────>│                    │                    │
+  │                    │  [Message locked]  │                    │                    │
+  │                    │                    ├─ Peel Layer 2 ────>│                    │
+  │                    │                    │  [Message locked]  │                    │
+  │                    │                    │                    ├─ Peel Layer 3 ────>│
+  │                    │                    │                    │  [Message locked]  │
+  │                    │                    │                    │                    ├─ Decrypt E2E
+  │                    │                    │                    │                    ├─ Read Message
 ```
+
+**What each relay sees:**
+- **Relay 1**: Knows Alice sent something → Relay 2 (doesn't know message content or final recipient)
+- **Relay 2**: Knows Relay 1 sent something → Relay 3 (doesn't know sender, message, or final recipient)
+- **Relay 3**: Knows Relay 2 sent something → Bob (doesn't know original sender or message)
+- **Bob**: Decrypts E2E encryption and reads the message from Alice
 
 ## Implementations
 
 ### Reference Implementations
 
-- **[ZenTalk API](https://github.com/ZentaChain/zentalk-api)** - Client API server implementation (Go)
-- **[ZenTalk Node](https://github.com/ZentaChain/zentalk-node)** - Node operator software (Go)
+- **[Zentalk API](https://github.com/ZentaChain/zentalk-api)** - Client API server implementation (Go)
+- **[Zentalk Node](https://github.com/ZentaChain/zentalk-node)** - Node operator software (Go)
 
 ### Integration
 
-To integrate with the ZenTalk network:
+To integrate with the Zentalk network:
 
-1. **Build a Client**: Use the ZenTalk API server
-2. **Run a Node**: Deploy ZenTalk Node to earn rewards
+1. **Build a Client**: Use the Zentalk API server
+2. **Run a Node**: Deploy Zentalk Node to earn rewards
 3. **Implement Protocol**: Follow specifications in `/docs`
 
 ## Contributing
@@ -149,8 +169,8 @@ MIT License - see LICENSE file for details
 
 ## Links
 
-- [ZenTalk API Repository](https://github.com/ZentaChain/zentalk-api)
-- [ZenTalk Node Repository](https://github.com/ZentaChain/zentalk-node)
+- [Zentalk API Repository](https://github.com/ZentaChain/zentalk-api)
+- [Zentalk Node Repository](https://github.com/ZentaChain/zentalk-node)
 - [Block Explorer](https://explorer.zentachain.io)
 
 ---
