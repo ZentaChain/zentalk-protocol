@@ -147,19 +147,11 @@ We welcome contributions to the protocol specifications! Please:
 
 MIT License - see LICENSE file for details
 
-## Community
-
-- **Website**: [zentachain.io](https://zentachain.io)
-- **Discord**: [discord.gg/zentachain](https://discord.gg/zentachain)
-- **Telegram**: [t.me/ZentaChain](https://t.me/ZentaChain)
-- **Email**: info@zentachain.io
-
 ## Links
 
 - [ZenTalk API Repository](https://github.com/ZentaChain/zentalk-api)
 - [ZenTalk Node Repository](https://github.com/ZentaChain/zentalk-node)
 - [Block Explorer](https://explorer.zentachain.io)
-- [Documentation](https://docs.zentalk.chat)
 
 ---
 
