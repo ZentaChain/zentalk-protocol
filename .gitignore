@@ -1,0 +1,16 @@
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts (if any test code is added)
+*.out
+/bin/
+/build/
+
+# Temporary files
+*.tmp
+/temp/
