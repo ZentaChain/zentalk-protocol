@@ -261,4 +261,4 @@ SELECT hex(encrypted_payload) FROM queued_messages LIMIT 1;
 - **test_messaging.sh** - Automated E2E encryption test
 - **verify_relay_cannot_decrypt.sh** - Practical demonstration of E2EE
 
-**Questions?** Open an issue or contact: security@zentalk.io
+**Questions?** Open an issue or contact: team@zentachain.io

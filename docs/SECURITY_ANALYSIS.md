@@ -533,8 +533,6 @@ You do NOT need to trust:
 ---
 
 **For more information**:
-- Protocol Specification: `/docs/PROTOCOL.md`
-- Threat Model: `/docs/THREAT_MODEL.md`
-- Security Audit: Contact security@zentalk.io
+- Security Audit: Contact team@zentachain.io
 
-**Report vulnerabilities**: security@zentalk.io (PGP key available)
+**Report vulnerabilities**: team@zentachain.io
